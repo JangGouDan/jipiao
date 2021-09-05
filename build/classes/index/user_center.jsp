@@ -14,9 +14,9 @@
 <head>
 <meta charset="UTF-8">
 <title>用户中心</title>
-<link type="text/css" rel="stylesheet" href="/fly_ticket_pre_book_war_exploded/index/css/core.css">
-<link type="text/css" rel="stylesheet" href="/fly_ticket_pre_book_war_exploded/index/css/icon.css">
-<link type="text/css" rel="stylesheet" href="/fly_ticket_pre_book_war_exploded/index/css/home.css">
+<link type="text/css" rel="stylesheet" href="/fly_ticket_pre_book/index/css/core.css">
+<link type="text/css" rel="stylesheet" href="/fly_ticket_pre_book/index/css/icon.css">
+<link type="text/css" rel="stylesheet" href="/fly_ticket_pre_book/index/css/home.css">
 </head>
 <body>
 
