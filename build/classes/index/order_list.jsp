@@ -9,6 +9,8 @@
 -@jdk		1.8.0_161	
 ------------------------------------%>
 <%@ include file="verify_login.jsp" %><%--包含验证登陆代码--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +19,19 @@
 <link href="../default/css/common.css" rel="stylesheet">
 <link href="../default/css/corptravel.css" rel="stylesheet">
 </head>
+<script type="text/javascript" src="../js/jquery-2.2.1.min.js"></script>
+<script type="text/javascript">
+	function gaiqian(){
+		var flag = confirm("确认要改改签吗！");
+		if(flag){
+			window.location.href="/fly_ticket_pre_book/default/ticket_changes.jsp";
+		}
+	}
+	function tuiding(){
+		var flag = confirm("退订需要收取20%手续费，确认要退订吗！");
+	}
+</script>
+
 <body>
 
 	<div class="container bg-gray-eee box-shadow mar-bottom-30"
@@ -25,12 +40,14 @@
 			class="table table-hover table-striped font12 table-bordered v-align-top">
 			<tr>
 				<th style="width:10%;">航班号</th>
-				<th style="width:15%;">乘机人</th>
-				<th style="width:18%;">乘机日期</th>
+				<th style="width:10%;">乘机人</th>
+				<th style="width:12%;">乘机日期</th>
 				<th style="width:10%;">舱位</th>
 				<th style="width:17%;">乘客证件</th>
-				<th style="width:15%;">联系人</th>
-				<th style="width:15%;">联系电话</th>
+				<th style="width:10%;">联系人</th>
+				<th style="width:10%;">联系电话</th>
+				<th style="width:11%;">状态</th>
+				<th style="width:10%;">操作</th>
 			</tr>
 			
 			<%
@@ -41,10 +58,10 @@
 				while(res.next()){
 					
 			%>
-			
+
 			<tr>
 				<td>
-					<%=res.getString(3) %> 
+					<%=res.getString(3) %>
 				</td>
 				<td><p><%=res.getString(4) %></p></td>
 				<td><%=res.getString(5) %></td>
@@ -52,7 +69,25 @@
 				<td><%=res.getString(7) %></td>
 				<td><%=res.getString(8) %></td>
 				<td><%=res.getString(9) %></td>
-				
+
+				<% String a = res.getString(10); if(a.equals("0")) {%>
+				<td>正常</td>
+				<td>
+					<a onclick="gaiqian()">改签</a>
+					<a onclick="tuiding()">退订</a>
+				</td>
+				<%}%>
+				<% if(a.equals("1")) {%> <td>已改签</td> <%}%>
+				<% if(a.equals("2")) {%> <td>已退订</td> <%}%>
+
+
+			<%--				<c:if test="<%=res.getString(10)%>==1">--%>
+<%--					<td>改签</td>--%>
+<%--				</c:if>--%>
+<%--				<c:if test="<%=res.getString(10)%>==2">--%>
+<%--					<td>退订</td>--%>
+<%--				</c:if>--%>
+
 			</tr>
 			
 			<%
@@ -63,4 +98,5 @@
 	</div>
 
 </body>
+
 </html>
