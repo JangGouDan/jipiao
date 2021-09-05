@@ -91,7 +91,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li class="active"><a href="javascript:none"><i
 							class="icon iconfont icon-nav-block font24">&#xe620;</i> 首页</a></li>
-					<li><a href="/fly_ticket_pre_book_war_exploded/user_center"><i
+					<li><a href="/fly_ticket_pre_book/user_center"><i
 							class="icon iconfont icon-nav-block font24">&#xe61c;</i> 用户中心</a></li>
 					<li><a href="/fly_ticket_pre_book/admin/index.jsp"><i
 							class="icon iconfont icon-nav-block font24">&#xe61c;</i> 登录后台</a></li>
