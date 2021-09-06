@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +20,7 @@ import javabean.db_conn;
 public class deal_order extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		HttpSession session = req.getSession();
@@ -48,11 +50,55 @@ public class deal_order extends HttpServlet{
 				db_conn conn=new db_conn();
 				String sql="insert into t_order (f_n,order_user,p_name,date,grade,p_id,contact,c_p) values('"+f_i+"','"+user_id+"','"+passenger_name+"','"+date+"','"+grade+"','"+passenger_id+"','"+contact+"','"+contact_phone+"')";
 				Integer res=conn.executeInsert(sql);
+				//同步修改航班余票
+				String querySql="SELECT first_surplus_number,business_surplus_number,economy_surplus_number from flight WHERE f_n = '"+f_i+"'";
+				ResultSet resultSet = conn.executeQuery(querySql);
+				String first_surplus_number = "";
+				String business_surplus_number = "";
+				String economy_surplus_number = "";
+				try {
+					while(resultSet.next()) {
+						first_surplus_number = resultSet.getString(1);
+						business_surplus_number = resultSet.getString(2);
+						economy_surplus_number = resultSet.getString(3);
+					}
+				}catch (SQLException e) {
+					System.out.println("出错信息如下："+e);
+				}
+
+				Integer updateRes = 0;
+				if(grade.equals("头等舱")){
+					Integer vlaue = Integer.valueOf(first_surplus_number)-1;
+					if(vlaue>=0){
+						String updateSql = "update  flight  set first_surplus_number = "+vlaue+ " WHERE f_n = '" + f_i + "'";
+						updateRes = conn.Update(updateSql);
+					}else {
+						session.setAttribute("flag","true");
+					}
+				}else if(grade.equals("商务舱")){
+					Integer vlaue = Integer.valueOf(business_surplus_number)-1;
+					if(vlaue>=0) {
+						String updateSql = "update  flight  set business_surplus_number = " + vlaue + " WHERE f_n = '" + f_i + "'";
+						updateRes = conn.Update(updateSql);
+					}else {
+						session.setAttribute("flag","true");
+					}
+				}else if(grade.equals("经济舱")){
+					Integer vlaue = Integer.valueOf(economy_surplus_number)-1;
+					if(vlaue>=0) {
+						String updateSql = "update  flight  set economy_surplus_number = " + vlaue + " WHERE f_n = '" + f_i + "'";
+						updateRes = conn.Update(updateSql);
+					}else {
+						session.setAttribute("flag","true");
+					}
+				}
+
 				System.out.println(res);
-				if(res.equals(1)) {
+				if(res.equals(1)&&updateRes.equals(1)) {
+					session.setAttribute("flag","false");
 					resp.sendRedirect("default/order_list.jsp");
 				}else {
-					resp.sendRedirect("default/order.jsp");
+					resp.sendRedirect("default/index.jsp");
 				}
 				
 			}else {

@@ -22,7 +22,7 @@
 <script type="text/javascript" src="../js/jquery-2.2.1.min.js"></script>
 <script type="text/javascript">
 	function gaiqian(){
-		var flag = confirm("确认要改改签吗！");
+		var flag = confirm("确认要改签吗！");
 		if(flag){
 			window.location.href="/fly_ticket_pre_book/default/ticket_changes.jsp";
 		}
@@ -30,6 +30,7 @@
 	function tuiding(){
 		var flag = confirm("退订需要收取20%手续费，确认要退订吗！");
 	}
+
 </script>
 
 <body>
