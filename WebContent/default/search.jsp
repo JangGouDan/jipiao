@@ -22,7 +22,17 @@
 <script type="/fly_ticket_pre_book/default/text/javascript" src="js/jquery-1.9.1.min.js"></script>
 <script src="/fly_ticket_pre_book/default/js/bootstrap.min.js"></script>
 </head>
-<body class="bg-body">
+<script type="text/javascript">
+	function onloadFun(){
+		<%
+			String flag = request.getParameter("flag");
+		%>
+		if(<%= flag%>){
+			alert("暂无直达航班，已为您推荐换乘航班")
+		}
+	}
+</script>
+<body class="bg-body" onload="onloadFun()">
 	<!-- header -->
 	<nav class="navbar navbar-default navbar-fixed-top bg-white">
 		<nav class="navbar navbar-default"

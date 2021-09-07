@@ -122,8 +122,8 @@
 					</select>
 				</div>
 				<div class="form-group mar-left-10">
-					<label for="">出发城市</label> <input name="departure" type="text" class="form-control"
-						style="width: 85px;" id="" value="" placeholder="出发城市">
+					<label for="">出发城市</label>
+					<input name="departure" type="text" class="form-control" style="width: 85px;" id="" value="" placeholder="出发城市">
 				</div>
 				<div class="form-group">
 					<label for=""> — <a href="#" class="huan">换</a> —
