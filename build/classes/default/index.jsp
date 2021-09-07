@@ -22,10 +22,18 @@
 <link href="css/corptravel.css" rel="stylesheet">
 <link href="css/enterprise.css" rel="stylesheet">
 <link href="css/iconfont.css" rel="stylesheet">
-<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </head>
-<body class="bg-body">
+<script type="text/javascript" src="../js/jquery-2.2.1.min.js"></script>
+<script type="text/javascript">
+	function onloadFun(){
+		if(<%= session.getAttribute("flag")%>){
+			alert("余票不足，购票失败")
+			<% session.removeAttribute("flag");%>
+		}
+	}
+</script>
+<body class="bg-body" onload="onloadFun()">
 	<!-- header -->
 	<nav class="navbar navbar-default navbar-fixed-top bg-white">
 		<nav class="navbar navbar-default"
@@ -155,6 +163,10 @@
 						Integer b_p_i=Integer.parseInt(b_p);
 						String e_p=res.getString(10);
 						Integer e_p_i=Integer.parseInt(e_p);
+						String flightDate = res.getString(11);//航班日期
+						String first_surplus_number = res.getString(12);//头等舱剩余票数
+						String business_surplus_number = res.getString(13);//商务舱剩余票数
+						String economy_surplus_number = res.getString(14);//经济舱剩余票数
 				%>
 			
 				<!-- 表头 -->
@@ -175,40 +187,46 @@
 				<div class="collapse" id="collapseExample" style="display: block;">
 					<div class="hangbanlist-body " style="background-color: #FEFCFC;">
 						<ul class="list-inline">
-							<li class="w-percentage-20"><strong class="blue-0093dd">头等舱(F)</strong></li>
-							<li class="w-percentage-25">座位数：≥16</li>
-							<li class="w-percentage-25">票面价：<span class="rmb">￥<%=f_p_i+500 %></span></li>
+							<li class="w-percentage-15"><strong class="blue-0093dd">头等舱(F)</strong></li>
+							<li class="w-percentage-15">座位数：≥16</li>
+							<li class="w-percentage-15">票面价：<span class="rmb">￥<%=f_p_i+500 %></span></li>
 
 
-							<li class="w-percentage-20 ">优惠价：<strong
+							<li class="w-percentage-15 ">优惠价：<strong
 								class="rmb orange-f60 font16">￥<%=f_p %></strong></li>
+							<li class="w-percentage-15 ">余票：<strong
+									class="rmb orange-f60 font16"><%=first_surplus_number%></strong></li>
 							<li class="pull-right "><button type="button"
 									class="btn btn-danger btn-sm"
 									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=f';">订票</button></li>
 						</ul>
 						<ul class="list-inline">
-							<li class="w-percentage-20"><strong class=" red">商务舱(B)</strong></li>
-							<li class="w-percentage-25">座位数：≥29</li>
-							<li class="w-percentage-25">票面价：<span class="rmb">￥<%=b_p_i+200 %></span></li>
+							<li class="w-percentage-15"><strong class=" red">商务舱(B)</strong></li>
+							<li class="w-percentage-15">座位数：≥29</li>
+							<li class="w-percentage-15">票面价：<span class="rmb">￥<%=b_p_i+200 %></span></li>
 
 
-							<li class="w-percentage-20 ">优惠价：<strong
+							<li class="w-percentage-15 ">优惠价：<strong
 								class="rmb orange-f60 font16">￥<%=b_p %></strong></li>
+							<li class="w-percentage-15 ">余票：<strong
+									class="rmb orange-f60 font16"><%=business_surplus_number%></strong></li>
 							<li class="pull-right "><button type="button"
 									class="btn btn-danger btn-sm"
 									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=b';">订票</button></li>
 						</ul>
 						<ul class="list-inline">
-							<li class="w-percentage-20"><strong class="blue-0093dd">经济舱(E)</strong></li>
-							<li class="w-percentage-25">座位数：≥62</li>
-							<li class="w-percentage-25">票面价：<span class="rmb">￥<%=e_p_i+100 %></span></li>
+							<li class="w-percentage-15"><strong class="blue-0093dd">经济舱(E)</strong></li>
+							<li class="w-percentage-15">座位数：≥62</li>
+							<li class="w-percentage-15">票面价：<span class="rmb">￥<%=e_p_i+100 %></span></li>
 
 
-							<li class="w-percentage-20 ">优惠价：<strong
+							<li class="w-percentage-15">优惠价：<strong
 								class="rmb orange-f60 font16">￥<%=e_p %></strong></li>
+							<li class="w-percentage-15 ">余票：<strong
+									class="rmb orange-f60 font16"><%=economy_surplus_number%></strong></li>
 							<li class="pull-right "><button type="button"
 									class="btn btn-danger btn-sm"
-									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=e';">订票</button></li>
+									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grae=e';">订票</button></li>
 						</ul>
 					</div>
 				</div>

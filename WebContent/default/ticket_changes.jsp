@@ -1,5 +1,6 @@
 <%@page import="javabean.db_conn"%>
 <%@page import="java.sql.ResultSet"%>
+<%@ page import="java.util.Map" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%-----------------------------------
 -@data-time	2019?6?13?---??5:09:05
@@ -25,6 +26,39 @@
 <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </head>
+<script type="text/javascript">
+	function gaiqian(changeFlightNumber,changePriceNumber) {
+		<%
+		String orderId = request.getParameter("orderId");
+		String flightNumber = request.getParameter("flightNumber");
+		String priceNumber = request.getParameter("priceNumber");
+		%>
+
+		var flag;
+		var vlaue = <%=priceNumber%> - changePriceNumber;
+		if(vlaue == 0){
+			flag = confirm("由航班"+"<%=flightNumber%>"+"改签为"+changeFlightNumber+"，差价为"+vlaue+"元！");
+			alert("改签成功！")
+		}else if(vlaue > 0){
+			flag = confirm("由航班"+"<%=flightNumber%>"+"改签为"+changeFlightNumber+"，差价"+vlaue+"将在两个工作日内退回支付账户！");
+			if (flag) {
+				alert("改签成功，差价退款" + vlaue + "元！")
+			}
+		}else {
+			flag = confirm("由航班"+"<%=flightNumber%>"+"改签为"+changeFlightNumber+"，还需支付"+Math.abs(vlaue)+"元！");
+			if (flag) {
+				alert("改签成功，支付"+Math.abs(vlaue)+"元！")
+			}
+		}
+
+		if (flag) {
+
+			// window.location.href = "/fly_ticket_pre_book/default/ticket_changes.jsp";
+		}
+	}
+
+
+</script>
 <body class="bg-body">
 
 
@@ -110,7 +144,8 @@
 								class="rmb orange-f60 font16">￥<%=f_p %></strong></li>
 							<li class="pull-right "><button type="button"
 									class="btn btn-danger btn-sm"
-									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=f';">订票</button></li>
+<%--									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=f';" --%>
+															onclick="gaiqian('<%= res.getString(1) %>',<%= res.getString(8) %>)">改签</button></li>
 						</ul>
 						<ul class="list-inline">
 							<li class="w-percentage-20"><strong class=" red">商务舱(B)</strong></li>
@@ -122,7 +157,8 @@
 								class="rmb orange-f60 font16">￥<%=b_p %></strong></li>
 							<li class="pull-right "><button type="button"
 									class="btn btn-danger btn-sm"
-									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=b';">订票</button></li>
+<%--									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=b';--%>
+															onclick="gaiqian('<%= res.getString(1) %>',<%= res.getString(9) %>)">改签</button></li>
 						</ul>
 						<ul class="list-inline">
 							<li class="w-percentage-20"><strong class="blue-0093dd">经济舱(E)</strong></li>
@@ -134,7 +170,8 @@
 								class="rmb orange-f60 font16">￥<%=e_p %></strong></li>
 							<li class="pull-right "><button type="button"
 									class="btn btn-danger btn-sm"
-									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=e';">订票</button></li>
+<%--									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=e';--%>
+															onclick="gaiqian('<%= res.getString(1) %>',<%= res.getString(10) %>)">改签</button></li>
 						</ul>
 					</div>
 				</div>
