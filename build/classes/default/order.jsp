@@ -22,10 +22,12 @@
 	String e_a=null;//目的机场
 	String t_t=null;//起飞时间
 	String l_t=null;//到达时间
+	String price_number=null;//票价
 	
 %>
 <%
 	flight_id=request.getParameter("flight_id");
+	price_number=request.getParameter("price_number");
 	if(flight_id==null){
 		flight_id="SU2312";
 	}
@@ -144,6 +146,7 @@ if(res.next()){
 	<!-- content start -->
 
 	<form action="../add_order" method="post" >
+	<input type="hidden" name="price_number" value="<%=price_number%>">
 	<input type="hidden" name="flight_id" value="<%=flight_id %>">
 	<div class="container bg-gray-eee box-shadow mar-bottom-30"
 		style="padding-right: 0px; padding-left: 0px; position: relative; margin-top: 120px;">

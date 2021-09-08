@@ -198,7 +198,7 @@
 									class="rmb orange-f60 font16"><%=first_surplus_number%></strong></li>
 							<li class="pull-right "><button type="button"
 									class="btn btn-danger btn-sm"
-									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=f';">订票</button></li>
+									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=f&price_number=<%=f_p %>';">订票</button></li>
 						</ul>
 						<ul class="list-inline">
 							<li class="w-percentage-15"><strong class=" red">商务舱(B)</strong></li>
@@ -212,7 +212,7 @@
 									class="rmb orange-f60 font16"><%=business_surplus_number%></strong></li>
 							<li class="pull-right "><button type="button"
 									class="btn btn-danger btn-sm"
-									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=b';">订票</button></li>
+									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grade=b&price_number=<%=b_p %>';">订票</button></li>
 						</ul>
 						<ul class="list-inline">
 							<li class="w-percentage-15"><strong class="blue-0093dd">经济舱(E)</strong></li>
@@ -226,7 +226,7 @@
 									class="rmb orange-f60 font16"><%=economy_surplus_number%></strong></li>
 							<li class="pull-right "><button type="button"
 									class="btn btn-danger btn-sm"
-									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grae=e';">订票</button></li>
+									onClick="window.location.href ='order.jsp?flight_id=<%=f_i %>&grae=e&price_number=<%=e_p %>';">订票</button></li>
 						</ul>
 					</div>
 				</div>

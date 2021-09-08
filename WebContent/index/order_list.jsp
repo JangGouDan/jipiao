@@ -23,7 +23,7 @@
 <script type="text/javascript" src="../js/jquery-2.2.1.min.js"></script>
 
 
-<body>
+<body onload="tuidingFun()">
 
 <div class="container bg-gray-eee box-shadow mar-bottom-30"
      style="padding-right: 0px; padding-left: 0px; position: relative; margin-top: 120px;">
@@ -46,14 +46,13 @@
             String user_id = session.getAttribute("user_id").toString();
             String sql = "select * from t_order where order_user='" + user_id + "'";
             ResultSet res = conn.executeQuery(sql);
-            int i = 0;
+
             while (res.next()) {
-                i++;
 
         %>
 
         <tr>
-            <td id = <%= i %>>
+            <td >
                 <%=res.getString(3) %>
             </td>
             <td><p><%=res.getString(4) %>
@@ -74,7 +73,7 @@
             <td>正常</td>
             <td>
                 <a onclick="gaiqian(<%= res.getString(1) %>,'<%= res.getString(3) %>',<%= res.getString(11) %>)">改签</a>
-                <a onclick="tuiding()">退订</a>
+                <a onclick="tuiding(<%= res.getString(1) %>)">退订</a>
             </td>
             <%}%>
             <% if (a.equals("1")) {%>
@@ -89,21 +88,34 @@
             function gaiqian(orderId,flightNumber,priceNumber) {
                 var flag = confirm("确认要改签吗！");
                 if (flag) {
-<%--                    <%--%>
-<%--                            session.setAttribute("orderId"+ i,res.getString(1));//订单id--%>
-<%--                            session.setAttribute("flightNumber",res.getString(3));//航班号--%>
-<%--                            session.setAttribute("priceNumber",res.getString(3));//原价格--%>
-<%--                    %>--%>
                     window.location.href = "/fly_ticket_pre_book/default/ticket_changes.jsp?orderId="+orderId+"&flightNumber="+flightNumber+"&priceNumber="+priceNumber;
                 } else {
-
+                    window.location.href = "/fly_ticket_pre_book/index/order_list.jsp";
                 }
             }
 
-            function tuiding() {
+            function tuiding(orderId) {
                 var flag = confirm("退订需要收取20%手续费，确认要退订吗！");
+                if(flag){
+                    window.location.href = "/fly_ticket_pre_book/index/order_list.jsp?tuidingOrderId="+orderId;
+                }
             }
-
+            function tuidingFun() {
+                    <%
+                        int updateRes = 0;
+                        String tuidingOrderId = request.getParameter("tuidingOrderId");
+                        if(tuidingOrderId!=null&&tuidingOrderId!=""){
+                            db_conn updateConn=new db_conn();
+                            String updateSql ="update t_order set order_status = 2 WHERE id = "+tuidingOrderId;
+                            updateRes = updateConn.Update(updateSql);
+                            request.removeAttribute("tuidingOrderId");
+                        }
+                    %>
+                    if('<%=updateRes%>'=='1'){
+                        alert("退订成功");
+                        window.location.href = "/fly_ticket_pre_book/index/order_list.jsp";
+                    }
+            }
 
         </script>
         <%

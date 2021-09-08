@@ -23,42 +23,9 @@
 <link href="css/corptravel.css" rel="stylesheet">
 <link href="css/enterprise.css" rel="stylesheet">
 <link href="css/iconfont.css" rel="stylesheet">
-<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 </head>
-<script type="text/javascript">
-	function gaiqian(changeFlightNumber,changePriceNumber) {
-		<%
-		String orderId = request.getParameter("orderId");
-		String flightNumber = request.getParameter("flightNumber");
-		String priceNumber = request.getParameter("priceNumber");
-		%>
+<script type="text/javascript" src="../js/jquery-2.2.1.min.js"></script>
 
-		var flag;
-		var vlaue = <%=priceNumber%> - changePriceNumber;
-		if(vlaue == 0){
-			flag = confirm("由航班"+"<%=flightNumber%>"+"改签为"+changeFlightNumber+"，差价为"+vlaue+"元！");
-			alert("改签成功！")
-		}else if(vlaue > 0){
-			flag = confirm("由航班"+"<%=flightNumber%>"+"改签为"+changeFlightNumber+"，差价"+vlaue+"将在两个工作日内退回支付账户！");
-			if (flag) {
-				alert("改签成功，差价退款" + vlaue + "元！")
-			}
-		}else {
-			flag = confirm("由航班"+"<%=flightNumber%>"+"改签为"+changeFlightNumber+"，还需支付"+Math.abs(vlaue)+"元！");
-			if (flag) {
-				alert("改签成功，支付"+Math.abs(vlaue)+"元！")
-			}
-		}
-
-		if (flag) {
-
-			// window.location.href = "/fly_ticket_pre_book/default/ticket_changes.jsp";
-		}
-	}
-
-
-</script>
 <body class="bg-body">
 
 
@@ -189,4 +156,50 @@
 	</div>
 
 </body>
+<script type="text/javascript">
+	function gaiqian(changeFlightNumber,changePriceNumber) {
+		<%
+		String orderId = request.getParameter("orderId");
+		String flightNumber = request.getParameter("flightNumber");
+		String priceNumber = request.getParameter("priceNumber");
+		%>
+
+		var flag;
+		var vlaue = <%=priceNumber%> - changePriceNumber;
+		if(vlaue == 0){
+			flag = confirm("由航班"+"<%=flightNumber%>"+"改签为"+changeFlightNumber+"，差价为"+vlaue+"元！");
+		}else if(vlaue > 0){
+			flag = confirm("由航班"+"<%=flightNumber%>"+"改签为"+changeFlightNumber+"，差价"+vlaue+"将在两个工作日内退回支付账户！");
+			if (flag) {
+				alert("差价退款" + vlaue + "元！")
+			}
+		}else {
+			flag = confirm("由航班"+"<%=flightNumber%>"+"改签为"+changeFlightNumber+"，还需支付"+Math.abs(vlaue)+"元！");
+			if (flag) {
+				alert("差价支付"+Math.abs(vlaue)+"元！")
+			}
+		}
+
+		if (flag) {
+			<%
+				int updateRes = 0;
+//				if(false){
+					db_conn updateConn=new db_conn();
+					String updateSql ="update t_order set order_status = 1 WHERE id = "+orderId;
+					updateRes = updateConn.Update(updateSql);
+//				}
+			%>
+
+			if('<%=updateRes%>' == '1'){
+				alert("改签完成！")
+			}else {
+				alert("改签失败！")
+			}
+
+			// window.location.href = "/fly_ticket_pre_book/default/ticket_order.jsp?flight_id="+changeFlightNumber+"&grade=f";
+		}
+	}
+
+
+</script>
 </html>

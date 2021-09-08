@@ -35,6 +35,7 @@ public class deal_order extends HttpServlet{
 			String passenger_id=req.getParameter("passenger_id");
 			String contact=req.getParameter("contact");
 			String contact_phone=req.getParameter("contact_phone");
+			String price_number=req.getParameter("price_number");
 			
 			
 			/*
@@ -48,7 +49,7 @@ public class deal_order extends HttpServlet{
 			if(f_i!=""&&passenger_name!=""&&date!=""&&grade!=""&&passenger_id!=""&&contact!=""&&contact_phone!="") {
 				System.out.println("======3========");
 				db_conn conn=new db_conn();
-				String sql="insert into t_order (f_n,order_user,p_name,date,grade,p_id,contact,c_p) values('"+f_i+"','"+user_id+"','"+passenger_name+"','"+date+"','"+grade+"','"+passenger_id+"','"+contact+"','"+contact_phone+"')";
+				String sql="insert into t_order (f_n,order_user,p_name,date,grade,p_id,contact,c_p,price_number) values('"+f_i+"','"+user_id+"','"+passenger_name+"','"+date+"','"+grade+"','"+passenger_id+"','"+contact+"','"+contact_phone+"','"+price_number+"')";
 				Integer res=conn.executeInsert(sql);
 				//同步修改航班余票
 				String querySql="SELECT first_surplus_number,business_surplus_number,economy_surplus_number from flight WHERE f_n = '"+f_i+"'";
